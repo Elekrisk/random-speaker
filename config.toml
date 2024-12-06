@@ -1,8 +1,8 @@
 [general]
 lower_bound = 5
-upper_bound = 10
+upper_bound = 3600
 
 [schedule]
-weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-start_time = "9:00"
+weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+start_time = "8:00"
 end_time = "17:00"

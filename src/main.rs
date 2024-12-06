@@ -121,7 +121,7 @@ impl Context {
         // Check if we are waiting for a play event
         let next_play: anyhow::Result<NaiveDateTime> = try {
             let contents = std::fs::read_to_string("next-play")?;
-            contents.parse()?
+            contents.trim().parse()?
         };
 
         match next_play {
@@ -210,10 +210,6 @@ impl Context {
             return;
         };
 
-        for sound in &sounds {
-            println!("{} -- {}", sound.path.file_name().unwrap().to_string_lossy(), sound.config.weight);
-        }
-
         let source =
             Decoder::new(BufReader::new(std::fs::File::open(&sound.path).unwrap())).unwrap();
         self.sink.append(source);
@@ -293,7 +289,7 @@ impl Context {
         println!("Next play @ {then}");
 
         // Write the next play to file, so that it survives speaker reboot
-        std::fs::write("next-play", then.format("%Y-%m-%dT%H:%M:%S.%f").to_string()).unwrap();
+        std::fs::write("next-play", then.format("%Y-%m-%dT%H:%M:%S.%f\n").to_string()).unwrap();
 
         self.sleep_until(then);
     }
